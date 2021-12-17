@@ -1,1 +1,1 @@
-web: gunicorn clothing.wsgi
+web: gunicorn attachment.wsgi

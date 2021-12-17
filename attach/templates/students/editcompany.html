@@ -1,0 +1,174 @@
+<!-- //templates/edit.html -->
+{% extends "students/base.html" %}
+ {% load static %}
+{% block title %}Add New Employee Records{% endblock title %}
+ 
+{% block content %}
+{% if request.user.is_authenticated  and user.is_student %}
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <title>Multiple user login</title>
+  </head>
+  <style type="text/css">
+    body {
+    color: #000;
+    overflow-x: hidden;
+    height: 100%;
+    background-image: url("https://i.imgur.com/GMmCQHC.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%
+}
+
+.card {
+    padding: 30px 40px;
+    margin-top: 60px;
+    margin-left: 240px !important;
+    margin-bottom: 60px;
+    border: none !important;
+    box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.2)
+}
+
+.blue-text {
+    color: #00BCD4
+}
+
+.form-control-label {
+    margin-bottom: 0
+}
+.form-group{
+    font-size: 15px !important;
+    font-weight: 200 !important
+}
+label{
+    font-size: 13px;
+}
+input,
+textarea,
+button {
+    padding: 8px 15px;
+    border-radius: 5px !important;
+    margin: 5px 0px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    font-size: 18px !important;
+    font-weight: 300
+}
+
+input:focus,
+textarea:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: 1px solid #00BCD4;
+    outline-width: 0;
+    font-weight: 400
+}
+
+.btn-block {
+    text-transform: uppercase;
+    font-size: 15px !important;
+    font-weight: 400;
+    height: 43px;
+    cursor: pointer
+}
+
+.btn-block:hover {
+    color: #fff !important
+}
+
+button:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    outline-width: 0
+}
+  </style>
+  <body>
+<form method="POST" class="post-form"  action="/update/{{student.id}}">  
+   {% csrf_token %}  
+  <div class="container">  
+ <div class="container-fluid px-1 py-5 mx-auto">
+    <div class="row">
+        <div class="col-xl-7 col-lg-12 col-md-9 col-11 text-center">
+            <h3 style="margin-left: 160px !important;">Update Company Details</h3>
+            <!-- <h4 style="margin-left:170px;">(This form is to be filled by the Industry Based Supervisor)</h4> -->
+            <p class="blue-text"></p>
+            <div class="card" style="width:900px">
+                <h5 class="text-center mb-4"></h5>
+                <!-- <form class="form-card" onsubmit="event.preventDefault()"> -->
+                    <div class="row justify-content-between text-left">
+            
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                          <label class="form-control-label px-3">Student fullname:<span class="text-danger"> *</span></label>
+                          <input type="text" class="form-control" name="s_fullname" id="id_s_fullname" required maxlength="150" value="{{ student.s_fullname }}" /> 
+                        </div> 
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                          <label class="form-control-label px-3">Phone No:<span class="text-danger"> *</span></label>
+                          <input type="text" class="form-control" name="phone_number" id="id_phone_number" required maxlength="150" value="{{ student.phone_number }}" />  
+                        </div> 
+                    </div>    
+                    <div class="row justify-content-between text-left">  
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                          <label class="form-control-label px-3">Reg no:<span class="text-danger"> *</span></label>
+                          <input type="text" class="form-control" name="registration_no" id="id_registration_no" required maxlength="150" value="{{ student.registration_no }}" /> 
+                        </div> 
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                          <label class="form-control-label px-3">Company Name:<span class="text-danger"> *</span></label>
+                          <input type="text" class="form-control" name="company_name" id="id_company_name" required maxlength="150" value="{{ student.company_name}}" />
+                        </div>
+                   </div>
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                          <label class="form-control-label px-3">County:<span class="text-danger"> *</span></label>
+                          <input type="text" class="form-control" name="county" id="id_county" required maxlength="150" value="{{ student.county}}" />
+                        </div>
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                          <label class="form-control-label px-3">Address:<span class="text-danger"> *</span></label>
+                          <input type="text" class="form-control" name="address" id="id_address" required maxlength="150" value="{{ student.address }}" />
+                        </div>
+                    </div>
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                          <label class="form-control-label px-3">Supervisor Name:<span class="text-danger"> *</span></label>
+                          <input type="text" class="form-control" name="supervisor_name" id="id_supervisor_name" required maxlength="150" value="{{ student.supervisor_name }}" />
+                        </div>
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                          <label class="form-control-label px-3">Supervisor Phone:<span class="text-danger"> *</span></label>
+                         <input type="text" class="form-control" name="company_phone_no" id="id_company_phone_no" required maxlength="150" value="{{ student.company_phone_no }}" /> 
+                        </div>  
+                    </div>
+                   
+                    <div class="row justify-content-end" style="margin-left:420px">
+                        <div class="form-group col-sm-12">
+                          <button type="submit" class="btn-block btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+</section>
+
+</body>
+ {% else %}
+  <p>You are Not allowed to access this page</p>
+{% endif %}
+{% endblock content %}   

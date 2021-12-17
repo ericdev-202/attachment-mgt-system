@@ -1,0 +1,61 @@
+
+
+
+<!-- //templates/show.html -->
+{% extends "students/base.html" %}
+ 
+{% block title %}Employee Records{% endblock title %}
+ 
+{% block content %}
+{% if request.user.is_authenticated  and user.is_student %}
+  <section style="margin-top:50px" class="home-section">
+    <div class="home-content">
+      <div class="col-md-12">
+     <!-- <span><a href="" class="btn btn-primary">Add New Record</a></span>   -->
+<h4 style="margin-left:50px">Student Details</h4><br>
+        <div class="table">
+  <table class="table table-striped table-bordered" width="100%">
+            <thead>
+                <!-- <th><input type="checkbox" id="checkall" /></th> -->
+                <th style="width:20px !important;display: none;">ID</th>
+                <th>Student Name:</th>
+                <th>Registration:</th>
+                <th>Course Name:</th>
+                <th>Year Of Study</th>
+                <th>School</th>
+                <!-- <th>Update</th> -->
+             </thead>
+   <tbody>
+   {% for student in student %}  
+    <tr>  
+     <td>{{student.student_name}}</td>
+     <td>{{student.regno}}</td>
+     <td>{{ student.coursename}}</td> 
+     <td>{{ student.year_of_study}}</td>
+     <td>{{ student.school }}</td>
+     <!-- <td class="col-sm-1"><p data-placement="top" data-toggle="tooltip" title="Edit"><a href="/updatecompany/{{ student.id }}" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></a></p></td> -->
+     <!-- <td></td>   -->
+    </tr>  
+    {% empty %}
+      <tr>
+    <td colspan="8" class="text-center" ><button  class="btn btn-success"><a style="color: white !important;text-decoration:none;" href="{% url 'new_student' %}">Add Your Details</a></button></td>
+  </tr>
+   {% endfor %} 
+   </tbody>
+         
+  </table>
+
+    </div>
+    </div>
+  </section>
+
+   {% else %}
+  <p>You are Not allowed to access this page</p>
+{% endif %}
+
+{% endblock content %}
+<!--   <section class="home-section">
+    <div class="home-content">
+
+    </div>
+  </section> -->

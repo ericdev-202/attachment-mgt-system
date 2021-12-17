@@ -1,0 +1,298 @@
+{% extends "students/base.html" %}
+ {% load static %}
+{% block title %}{% endblock title %}
+ 
+{% block content %}
+{% if request.user.is_authenticated  and user.is_student %}
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title></title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+   <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/aos.css' %}">
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/app.css'%}"> -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-5/css/bootstrap.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'fontawesome-5/css/fontawesome.css'%}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/css/bootstrap-theme.css' %}">
+  <link rel="stylesheet" type="text/css" href="{%static 'jq/jquery-ui.theme.css' %}">
+  <link rel="stylesheet" type="text/css" href="{%static 'jq/jquery-ui.structure.css' %}">        
+
+ 
+
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <title>Multiple user login</title>
+  </head>
+  <style type="text/css">
+    body {
+    color: #000;
+    overflow-x: hidden;
+    height: 100%;
+    background-image: url("https://i.imgur.com/GMmCQHC.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%
+}
+
+.card {
+    padding: 30px 40px !important;
+    margin-top: 60px !important;
+    margin-left: 70px !important;
+    margin-bottom: 60px;
+    border: none !important;
+    box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.2)
+}
+
+.blue-text {
+    color: #00BCD4
+}
+
+.form-control-label {
+    margin-bottom: 0
+}
+
+input,
+select{
+    font-size: 15px !important;
+    height: 40px !important;
+}
+}
+input,
+textarea,
+button {
+    padding: 8px 15px !important;
+    border-radius: 5px !important;
+    margin: 5px 0px !important;
+    box-sizing: border-box !important;
+    border: 1px solid #ccc !important;
+    font-size: 18px !important;
+    font-weight: 300 !important
+}
+
+input:focus,
+textarea:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: 1px solid #00BCD4;
+    outline-width: 0;
+    font-weight: 400 !important
+}
+
+.btn-block {
+    text-transform: uppercase;
+    font-size: 15px !important;
+    font-weight: 400;
+    height: 43px;
+    cursor: pointer
+}
+
+.btn-block:hover {
+    color: #fff !important
+}
+
+button:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    outline-width: 0
+}
+label{
+    font-size: 14px !important;
+}
+  </style>
+  <body>
+<!-- <table>
+    <tbody>
+        <td>{{form.student_name}}</td>
+    </tbody>
+</table>
+ -->
+
+  <section style="margin-top:50px" class="home-section">
+    <div class="home-content">
+      <div class="col-md-12">
+
+
+<form  method="post">
+<!-- <a href="{% url 'student' %}" class="btn btn-dark my-3"><i class="fa fa-fw fa-arrow-left"></i>Go Back</a> -->
+{% csrf_token %}
+ <div class="container-fluid px-1 py-5 mx-auto">
+    <div class="row">
+        <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center" >
+            <h3 style="margin-left:400px !important;">Fill Daily Report</h3>
+            <!-- <p class="blue-text"></p> -->
+            <div class="card" style="width:900px !important">
+                <!-- <h5 class="text-center mb-4"></h5> -->
+                <form class="form-card" onsubmit="event.preventDefault()">
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group m-3">
+                            <label>Your Name<span class="text-danger"> *</span></label>
+                            <select name="student" class="form-control">
+                                <option value='none'>..</option>
+
+                                {% for student in students %}
+                                <option value='{{student.id}}'>{{student.student_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                          <label class="form-control-label px-3">Description of workdone<span class="text-danger"> *</span></label>
+                         <textarea style="height:300px;" required name="workdone" id="workdone" type="text" placeholder="Write down your work.."
+                                class="form-control"></textarea>
+                        </div>
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                          <label class="form-control-label px-3">Skills Attained<span class="text-danger"> *</span></label>
+                          <textarea style="height:300px;" required name="skills" id="skills" type="text" placeholder="Write skills gained..."
+                                class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                          <label class="form-control-label px-3">Date:<span class="text-danger"> *</span></label>
+                          <input required name="mdate" id="mdate" type="date" multiple class="form-control">
+                        </div>
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                          <label class="form-control-label px-3">Day:<span class="text-danger"> *</span></label>
+                          <select class="form-control" name="dayOfTheWeek" id="dayOfTheWeek" required>
+                            <option>...</option>
+                            <option>Monday</option>
+                            <option>Tuesday</option>
+                            <option>Wednesday</option>
+                            <option>Thursday</option>
+                            <option>Friday</option>
+                            <option>Saturday</option>
+                            <option>Sunday</option>
+                          </select>
+             
+                        </div>
+                    </div>
+                    <div class="row justify-content-end">
+                        <div class="form-group col-sm-6">
+                          <button type="submit" class="btn-block btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+
+    </div>
+    </div>
+  </section>
+
+<script type="text/javascript">
+  function validate(val) {
+v1 = document.getElementById("fname");
+v2 = document.getElementById("lname");
+v3 = document.getElementById("email");
+v4 = document.getElementById("mob");
+v5 = document.getElementById("job");
+v6 = document.getElementById("ans");
+
+flag1 = true;
+flag2 = true;
+flag3 = true;
+flag4 = true;
+flag5 = true;
+flag6 = true;
+
+if(val>=1 || val==0) {
+if(v1.value == "") {
+v1.style.borderColor = "red";
+flag1 = false;
+}
+else {
+v1.style.borderColor = "green";
+flag1 = true;
+}
+}
+
+if(val>=2 || val==0) {
+if(v2.value == "") {
+v2.style.borderColor = "red";
+flag2 = false;
+}
+else {
+v2.style.borderColor = "green";
+flag2 = true;
+}
+}
+if(val>=3 || val==0) {
+if(v3.value == "") {
+v3.style.borderColor = "red";
+flag3 = false;
+}
+else {
+v3.style.borderColor = "green";
+flag3 = true;
+}
+}
+if(val>=4 || val==0) {
+if(v4.value == "") {
+v4.style.borderColor = "red";
+flag4 = false;
+}
+else {
+v4.style.borderColor = "green";
+flag4 = true;
+}
+}
+if(val>=5 || val==0) {
+if(v5.value == "") {
+v5.style.borderColor = "red";
+flag5 = false;
+}
+else {
+v5.style.borderColor = "green";
+flag5 = true;
+}
+}
+if(val>=6 || val==0) {
+if(v6.value == "") {
+v6.style.borderColor = "red";
+flag6 = false;
+}
+else {
+v6.style.borderColor = "green";
+flag6 = true;
+}
+}
+
+flag = flag1 && flag2 && flag3 && flag4 && flag5 && flag6;
+
+return flag;
+}
+</script>
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+
+</body>
+ {% else %}
+  <p>You are Not allowed to access this page</p>
+{% endif %}
+
+{% endblock content %}

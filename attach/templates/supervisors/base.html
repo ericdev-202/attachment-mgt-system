@@ -1,0 +1,77 @@
+{% if request.user.is_authenticated  and user.is_supervisor %}
+<!DOCTYPE html>
+<!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    {% load static %}  
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+ 
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+  <link rel="stylesheet" href="{% static 'new/style.css' %}">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  <div class="sideba">
+    <div class="logo-details">
+      <i class='bx bxl-c-plus-plus'></i>
+      <span class="logo_name">IAMS</span>
+    </div>
+    <ul class="nav-links">
+      <li>
+        <a href="{% url 'viewlogbooks' %}">
+          <i class='bx bx-book' ></i>
+          <span class="link_name">View Logbooks</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'details'%}">
+          <i class='bx bx-grid-alt' ></i>
+          <span class="link_name">Assess Student</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'assess' %}">
+          <i class='bx bx-grid-alt' ></i>
+          <span class="link_name">View Assessment</span>
+        </a>
+      </li>
+      
+
+    <div class="profile-details">
+      <div class="profile-content">
+        <!--<img src="image/profile.jpg" alt="profileImg">-->
+      </div>
+      <div class="name-job">
+        <div class="profile_name">{{request.user}}</div>
+        <p class="text-secondary">{{ user.email }}</p>
+      </div>
+      <a href="{% url 'logout'%}"><i class='bx bx-log-out-circle' style="font-size:26px;color:white;margin-right: 20px;" ></i></a>
+    </div>
+  </li>
+</ul>
+  </div>
+  {% else %}
+  <p>You are not allowed access this page</p>
+  {% endif%}
+
+    {% block content %}{% endblock %}
+  <script>
+
+  $(document).ready(function() {
+    $('#bootstrapdatatable').DataTable({     
+      "aLengthMenu": [[7], [7]],
+        "iDisplayLength": 7
+       } 
+    );
+} );
+  </script>
+</body>
+</html>
+
+
+

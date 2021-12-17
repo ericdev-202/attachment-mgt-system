@@ -1,0 +1,55 @@
+
+<!-- //templates/show.html -->
+{% extends "students/base.html" %}
+ 
+{% block title %}Employee Records{% endblock title %}
+ 
+{% block content %}
+{% if request.user.is_authenticated  and user.is_student %}
+  <section style="margin-top:50px" class="home-section">
+    <div class="home-content">
+      <div class="col-md-12">
+     <span><a href="{% url 'elogbook' %}" class="btn btn-primary">Add New Record</a></span>  
+
+        <div class="table">
+  <table id="bootstrapdatatable" class="table table-striped table-bordered" width="100%">
+            <thead>
+                <!-- <th><input type="checkbox" id="checkall" /></th> -->
+                <th style="width:20px !important;display: none;">ID</th>
+                <!-- <th>Day</th> -->
+                <th>Date</th>
+                <th style="height:50px;text-align: center;">Job Assigned To Student</th>
+                <th style="text-align:center">Special Skills Acquired</th>
+                <th>Edit</th>
+                <th>Delete</th>
+             </thead>
+   <tbody>
+   {% for students in elogbooks %}  
+    <tr>  
+     <!-- <td><input type="checkbox" class="checkthis" /></td> -->
+     <td style="display:none;">{{ students.id }}</td> 
+     <td class="col-sm-1">{{ students.dayOfTheWeek  }}<br>{{ students.mdate }}</td>   
+     <!-- <td class="col-sm-1">{{ student.mdate }}</td>    -->
+     <td style="height: 110px !important; width: 100px !important;">{{ students.workdone }}</td>  
+     <td style="width: 100px !important;" class="col-sm-4">{{ students.skills }}</td> 
+     <td class="col-sm-1"><p data-placement="top" data-toggle="tooltip" title="Edit"><a href="/edit/{{ students.id }}" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></a></p></td>
+     <td class="col-sm-1"><p data-placement="top" data-toggle="tooltip" title="Delete"><a href="/delete/{{ students.id }}" class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></a></p></td>  
+    </tr>  
+   {% endfor %} 
+   </tbody>
+         
+  </table>
+
+    </div>
+    </div>
+  </section>
+ {% else %}
+  <p>You are Not allowed to access this page</p>
+{% endif %}
+
+{% endblock content %}
+<!--   <section class="home-section">
+    <div class="home-content">
+
+    </div>
+  </section> -->

@@ -1,0 +1,102 @@
+{% if request.user.is_authenticated  and user.is_lecturer %}
+<!DOCTYPE html>
+<!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    {% load static %}  
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+ 
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+  <link rel="stylesheet" href="{% static 'new/style.css' %}">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  <div class="sideba">
+    <div class="logo-details">
+      <i class='bx bxl-c-plus-plus'></i>
+      <span class="logo_name">IAMS</span>
+    </div>
+    <ul class="nav-links">
+      <li>
+        <a href="{% url 'allstudent'%}">
+          <i class='bx bx-grid-alt' ></i>
+          <span class="link_name">Student Details</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'allcompanydetails'%}">
+          <i class='bx bx-grid-alt' ></i>
+          <span class="link_name">Company Details</span>
+        </a>
+      </li>
+      <li>
+        <div class="iocn-link">
+          <a href="{% url 'viewall'%}">
+            <i class='bx bx-detail' ></i>
+            <span class="link_name">Supervisor Assessment</span>
+          </a>
+        </div>
+      </li>
+      <li>
+        <div class="iocn-link">
+          <a href="{% url 'assessed'%}">
+            <i class='bx bx-detail' ></i>
+            <span class="link_name">Lecturer Assessment</span>
+          </a>
+        </div>
+      </li>
+      <li>
+        <div class="iocn-link">
+          <a href="{% url 'logbookdetails' %}">
+            <i class='bx bx-book-open' ></i>
+            <span class="link_name">E-Logbook</span>
+          </a>
+        </div>
+      </li>
+      <li>
+        <a href="{% url 'reportviews' %}">
+          <i class='bx bx-file-blank' ></i>
+          <span class="link_name">Report</span>
+        </a>
+      </li>
+
+    <div class="profile-details">
+      <div class="profile-content">
+        <!--<img src="image/profile.jpg" alt="profileImg">-->
+      </div>
+      <div class="name-job">
+        
+        <div class="profile_name">{{request.user}}</div>
+        <div class="job">Company Name: {{ user.company_name }}</div>
+
+      </div>
+      <a href="{% url 'logout'%}"><i class='bx bx-log-out-circle' style="font-size:26px;color:white;margin-right: 20px;" ></i></a>
+    </div>
+  </li>
+</ul>
+  </div>
+  
+
+    {% block content %}{% endblock %}
+  <script>
+
+  $(document).ready(function() {
+    $('#bootstrapdatatable').DataTable({     
+      "aLengthMenu": [[7], [7]],
+        "iDisplayLength": 7
+       } 
+    );
+} );
+  </script>
+</body>
+</html>
+
+   {% else %}
+  <p>You are Not allowed to access this page</p>
+{% endif %}
+

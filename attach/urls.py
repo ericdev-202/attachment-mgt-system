@@ -9,6 +9,8 @@ urlpatterns = [
     path('',views.lindex,name='index'),
     path('login/',views.login_view, name='login_view'),
     path('register/',views.register, name='register'),
+    path('Supervisorregister/',views.Supervisorregister, name='supervisor_register'),
+    path('Studentregister/',views.Studentregister, name='student_register'),
     path('logout/', views.logout_user, name="logout"),
     # path('adminpage/', views.hod, name='adminpage'),
     
@@ -35,6 +37,7 @@ urlpatterns = [
     #students url
     # path('add',views.add),
     path('companydetails/',views.compdet,name='companydetails'),
+    path('sky/',views.skytry),
     path('student/',views.student,name='student'),
     path('student_det/',views.addStudent,name='new_student'),
     path('elogbook/',views.elogbook,name='logbook'),
@@ -59,6 +62,7 @@ urlpatterns = [
     path('studentdetails', views.index,name='details'),  
     path('edit/<int:id>', views.edit),  
     path('update/<int:id>', views.update),  
+    # path('studentcmnyfilter/',views.filteredcompany,name='stfilcom')
     # path('delete/<int:id>', views.destroy),  
 
 

@@ -27,7 +27,7 @@ from django.conf import settings
 
 #views.py
 from django.shortcuts import render, redirect  
-from .forms import StudentForm,StudentDetailsForm,CompanyF1Form,LecturerF1Form,SignUpForm,LoginForm,CompDetailsForm,LecturerForm
+from .forms import StudentForm,StudentDetailsForm,CompanyF1Form,LecturerF1Form,SignUpForm,LoginForm,CompDetailsForm,LecturerForm,StudentSignUpForm,SupervisorSignUpForm
 from .models import Student
 from attach import myFields
 from .myFields import DayOfTheWeekField
@@ -72,6 +72,32 @@ def register(request):
         form = SignUpForm()
     return render(request,'logins/register.html',{'form':form})
 
+def Supervisorregister(request):
+    if request.method == 'POST':
+        form = SupervisorSignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            messages.success(request, f'Your account has been sent for approval!')
+            return redirect('login_view')
+        else:
+            message = 'form is not valid'
+    else:
+        form = SupervisorSignUpForm()
+    return render(request,'logins/Supervisorregister.html',{'form':form})
+
+def Studentregister(request):
+    if request.method == 'POST':
+        form = StudentSignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            messages.success(request, f'Your account has been sent for approval!')
+            return redirect('login_view')
+        else:
+            message = 'form is not valid'
+    else:
+        form = StudentSignUpForm()
+    return render(request,'logins/Studentregister.html',{'form':form})
+
 
 
 def login_view(request):
@@ -93,7 +119,7 @@ def login_view(request):
                 return redirect('supervisors')
             elif user is not None and user.is_student:  
                 login(request,user)
-                return redirect('student')    
+                return redirect('viewstudent')    
             else:   
                 msg = 'invalid credentials'
         else:       
@@ -112,26 +138,32 @@ def login_view(request):
 #         assess = Student.objects.all()
 #     return render(request,'lectures/viewallAssessment.html',{'assess':assess})
 
+
 def lecturer(request):
     return render(request,'lectures/index.html')  
 
 @login_required
 def viewallstudent(request):
-    if request.method == 'GET':
-        students = StudentDetails.objects.all()
+    user = request.user
+    students = StudentDetails.objects.filter(university_name=user.university_name)
+    # if request.method == 'GET':
+    #     students = StudentDetails.objects.all()
     return render(request,'lectures/viewallstudent.html',{'students':students})
 
 @login_required
 def viewCompanydetails(request):    
-    if request.method == 'GET':
-        company = CompDetails.objects.all()
+    user = request.user
+    company = CompDetails.objects.filter(university_name=user.university_name)
+    # if request.method == 'GET':
+    #     company = CompDetails.objects.all()
     return render(request,'lectures/viewcompanydetails.html',{'company':company})
 
 
 
 def lecturerassement(request):
-    students = Lecturer.objects.filter(status="assessed")
-    supervisorassess = Student.objects.filter(status="assessed")
+    user = request.user
+    students = Lecturer.objects.filter(status="assessed",university_name=user.university_name)
+    supervisorassess = Student.objects.filter(status="assessed",university_name=user.university_name)
     return render(request,'lectures/lecturerassess.html',{'students':students,'supervisorassess':supervisorassess})
 
 # @login_required
@@ -145,8 +177,18 @@ def getAssess(request, id):
     return render(request,'lectures/viewallAssessment.html',{'students':students})
 
 @login_required
-def logbookdetails(request):    
-    logbook = Elogbook.objects.all()
+def logbookdetails(request):
+    user = request.user
+    # onelogbook = set()
+    onelogbook = []
+    logbook = Elogbook.objects.select_related('student').filter(student__university_name=user.university_name)
+    # logbook = Elogbook.objects.filter(student__university_name=user.university_name)
+    for l in logbook:
+        onelogbook.append(l.student)
+        print(logbook)
+        # onelogbook.add(l)
+    # print(onelogbook)
+        
     return render(request,'lectures/viewlogbook.html',{'logbook':logbook})
 
 @login_required
@@ -156,12 +198,14 @@ def logbookview(request, id):
 
 @login_required
 def reportview(request):
-    reports = Document.objects.all()
+    user = request.user
+    reports = Document.objects.filter(student__university_name=user.university_name)
     return render(request,'lectures/reportsview.html',{'reports':reports})
 
 @login_required
 def showassessed(request):
-    students = Lecturer.objects.filter(status="notassessed")
+    user = request.user
+    students = Lecturer.objects.filter(status="notassessed",university_name=user.university_name)
     return render(request,'lectures/assessed.html',{'students':students})
 
 @login_required
@@ -198,7 +242,8 @@ def supervisor(request):
     return render(request,'supervisors/base.html')
 
 def index(request):  
-    students = Student.objects.filter(status="notassessed")  
+    user = request.user
+    students = Student.objects.filter(status="notassessed",company_name=user.company_name)  
     return render(request,'supervisors/show.html',{'students':students})  
 
 #assessment
@@ -225,7 +270,8 @@ def destroy(request, id):
 #filtering assess students
 @login_required
 def viewassessment(request):    
-    assessment = Student.objects.filter(status="assessed")
+    user = request.user
+    assessment = Student.objects.filter(status="assessed",company_name=user.company_name)
     return render(request,'supervisors/viewassessment.html',{'assessment':assessment})
 #views assessment
 @login_required
@@ -234,22 +280,17 @@ def view(request, id):
     return render(request,'supervisors/assessment.html',{'student':student})
 
 @login_required
-def Logbook(request):    
-	logbook = Elogbook.objects.all()
-	return render(request,'supervisors/viewLogbook.html',{'logbook':logbook})
+def Logbook(request):
+    user = request.user
+    logbook = Elogbook.objects.filter(company__company_name=user.company_name)
+    return render(request,'supervisors/viewLogbook.html',{'logbook':logbook})    
+
 
 @login_required
 def ViewLogbook(request, id):
     logbooks = Elogbook.objects.get(id=id)
     return render(request,'supervisors/Logbook.html',{'logbooks':logbooks})
 #end of supervisor views    
-
-
-
-
-
-
-
 
 
 
@@ -414,6 +455,28 @@ def elogbook_entry(request):
     context = {'students':students}
     return render(request,'students/elog.html',context) 
 
+def skytry(request):
+    user = request.user
+    students = user.studentdetails_set.all()
+
+    if request.method == 'POST':
+        student = request.POST.get('student')
+        name = request.POST.get('name')
+
+        data = request.POST
+
+        if data['student'] != 'none':
+            student = StudentDetails.objects.get(id=data['student'])
+        else:    
+            student = None
+
+        sky = Sky.objects.create(
+            student = student,
+            name = name,
+            )
+    return render(request,'students/sky.html',{'students':students})        
+
+
 @login_required
 def compdet(request):
     user = request.user
@@ -422,6 +485,7 @@ def compdet(request):
     if request.method == 'POST':
         student = request.POST.get('student')
         s_fullname = request.POST.get('s_fullname')
+        university_name = request.POST.get('university_name')
         registration_no = request.POST.get('registration_no')
         phone_number = request.POST.get('phone_number')
         company_name = request.POST.get('company_name')
@@ -441,6 +505,7 @@ def compdet(request):
         company = CompDetails.objects.create(
             student = student,
             s_fullname=s_fullname,
+            university_name=university_name,
             registration_no = registration_no,
             phone_number = phone_number,
             company_name = company_name,
@@ -452,6 +517,7 @@ def compdet(request):
             )
         comp = Student.objects.create(
             s_fullname = s_fullname,
+            university_name=university_name,
             registration_no = registration_no,
             phone_number = phone_number,
             company_name = company_name,
@@ -462,6 +528,7 @@ def compdet(request):
             )
         lec = Lecturer.objects.create(
             s_fullname = s_fullname,
+            university_name=university_name,
             registration_no = registration_no,
             phone_number = phone_number,
             company_name = company_name,
@@ -509,3 +576,6 @@ def model_form_upload(request):
 def logout_user(request):
     logout(request)
     return HttpResponseRedirect('/')
+
+
+

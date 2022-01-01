@@ -4,7 +4,7 @@ from django.contrib import admin
 # Register your models here.
 from django.contrib.auth.admin import UserAdmin
 
-from .models import Staff,Student,Elogbook,Document,StudentDetails,Lecturer,CompDetails
+from .models import Staff,Student,Elogbook,Document,StudentDetails,Lecturer,CompDetails,Sky,Supervisor
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
@@ -31,6 +31,8 @@ class UserAdminConfig(UserAdmin):
 # admin.site.register(User,UserAdminConfig)
 admin.site.register(User)
 admin.site.register(Staff)
+admin.site.register(Sky)
+admin.site.register(Supervisor)
 admin.site.register(StudentDetails)
 admin.site.register(Student)
 admin.site.register(Document)

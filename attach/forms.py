@@ -13,11 +13,12 @@ User = get_user_model()
 class StudentForm(forms.ModelForm):  
     class Meta:  
         model = Student  
-        fields = ['s_fullname','phone_number','registration_no','company_name','address','county','company_phone_no','supervisor_name','gender',
-        'punctual','regulations','workmanship','workout','adaptability','commu','reliability','team_work','overall_assessment','general_remarks'
+        fields = ['s_fullname','university_name','phone_number','registration_no','company_name','address','county','company_phone_no','supervisor_name','gender',
+        'period_from','period_to','punctual','regulations','workmanship','workout','adaptability','commu','reliability','team_work','overall_assessment','general_remarks'
         ,'assessed_by','position','status','mdate'] #https://docs.djangoproject.com/en/3.0/ref/forms/widgets/
         widgets = { 
             's_fullname': forms.TextInput(attrs={ 'class': 'form-control' }),
+            'university_name': forms.TextInput(attrs={'class':'form-control'}),
             'phone_number': forms.TextInput(attrs={ 'class': 'form-control' }),
             'registration_no': forms.TextInput(attrs={ 'class': 'form-control' }),
             'company_name': forms.TextInput(attrs={ 'class': 'form-control' }),
@@ -47,7 +48,7 @@ class StudentForm(forms.ModelForm):
 class CompDetailsForm(forms.ModelForm):
     class Meta:
         model = CompDetails
-        fields = ['s_fullname','phone_number','registration_no','company_name','address','county','company_phone_no','supervisor_name']
+        fields = ['s_fullname','university_name','phone_number','registration_no','company_name','address','county','company_phone_no','supervisor_name']
 
 
 class ElogBookForm(forms.ModelForm):  
@@ -70,6 +71,11 @@ class CompanyF1Form(forms.ModelForm):
                 attrs={
                 "class":"form-control"
             }))
+        university_name = forms.CharField(
+            widget = forms.TextInput(
+                attrs={
+                "class":"form-control"
+                }))
         registration_no = forms.CharField(
             widget = forms.TextInput(
                 attrs={
@@ -111,11 +117,12 @@ class CompanyF1Form(forms.ModelForm):
 class LecturerForm(forms.ModelForm):  
     class Meta:  
         model = Lecturer 
-        fields = ['s_fullname','phone_number','registration_no','company_name','address','county','company_phone_no','supervisor_name','gender',
-        'punctual','regulations','workmanship','workout','adaptability','commu','reliability','team_work','overall_assessment','general_remarks'
+        fields = ['s_fullname','university_name','phone_number','registration_no','company_name','address','county','company_phone_no','supervisor_name','gender',
+        'period_from','period_to','punctual','regulations','workmanship','workout','adaptability','commu','reliability','team_work','overall_assessment','general_remarks'
         ,'assessed_by','position','status','mdate'] #https://docs.djangoproject.com/en/3.0/ref/forms/widgets/
         widgets = { 
             's_fullname': forms.TextInput(attrs={ 'class': 'form-control' }),
+            'university_name': forms.TextInput(attrs={'class':'form-control'}),
             'phone_number': forms.TextInput(attrs={ 'class': 'form-control' }),
             'registration_no': forms.TextInput(attrs={ 'class': 'form-control' }),
             'company_name': forms.TextInput(attrs={ 'class': 'form-control' }),
@@ -151,6 +158,11 @@ class LecturerF1Form(forms.ModelForm):
                 attrs={
                 "class":"form-control"
             }))
+        university_name = forms.CharField(
+            widget = forms.TextInput(
+                attrs={
+                "class":"form-control"
+                }))
         registration_no = forms.CharField(
             widget = forms.TextInput(
                 attrs={
@@ -219,9 +231,14 @@ class StudentDetailsForm(forms.ModelForm):
                 attrs={
                 "class":"form-control-label"
                 }))
+        university_name = forms.CharField(
+            widget = forms.TextInput(
+                attrs={
+                "class":"form-control"
+                }))
 
 
-        fields =('student_name' ,'coursename','regno','year_of_study','school')
+        fields =('student_name','university_name' ,'coursename','regno','year_of_study','school')
         def clean(self):
             cleaned_data = super().clean()
             user = cleaned_data.get('user')
@@ -231,6 +248,73 @@ class StudentDetailsForm(forms.ModelForm):
 
 
 class SignUpForm(UserCreationForm):
+    username = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+            "class":"form-control"
+            }
+            )
+        )
+    email = forms.CharField(
+        widget = forms.TextInput(
+            attrs={
+            "class":"form-control"
+            })
+        )
+    first_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+            "class":"form-control"
+            }
+            ))
+    last_name = forms.CharField(
+        widget = forms.TextInput(
+            attrs={
+            "class":"form-control"
+            }))
+    university_name = forms.CharField(
+        widget = forms.TextInput(
+            attrs={
+            "class":"form-control"
+            }))
+    password1 = forms.CharField(
+        widget = forms.PasswordInput(
+            attrs={
+            "class":"form-control"
+            }
+            )
+        )
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+            "class":"form-control"
+            }))
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name','email','university_name','is_lecturer','password1', 'password2')
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "class":"form-control"
+            }
+        )
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "class":"form-control"
+            }
+        )
+    )
+
+
+
+
+class StudentSignUpForm(UserCreationForm):
     username = forms.CharField(
         widget=forms.TextInput(
             attrs={
@@ -270,24 +354,54 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name','email','is_supervisor','is_student','is_lecturer','password1', 'password2')
+        fields = ('username', 'first_name', 'last_name','email','is_student','password1', 'password2')
 
 
-class LoginForm(forms.Form):
+
+class SupervisorSignUpForm(UserCreationForm):
     username = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                "class":"form-control"
+            "class":"form-control"
             }
+            )
         )
-    )
-    password = forms.CharField(
+    email = forms.CharField(
+        widget = forms.TextInput(
+            attrs={
+            "class":"form-control"
+            })
+        )
+    first_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+            "class":"form-control"
+            }
+            ))
+    last_name = forms.CharField(
+        widget = forms.TextInput(
+            attrs={
+            "class":"form-control"
+            }))
+    company_name = forms.CharField(
+        widget = forms.TextInput(
+            attrs ={
+            "class":"form-control"
+            }))
+    password1 = forms.CharField(
+        widget = forms.PasswordInput(
+            attrs={
+            "class":"form-control"
+            }
+            )
+        )
+    password2 = forms.CharField(
         widget=forms.PasswordInput(
             attrs={
-                "class":"form-control"
-            }
-        )
-    )
+            "class":"form-control"
+            }))
 
-
+    class Meta:
+        model = User
+        fields = ('username', 'first_name','last_name','email','company_name','is_supervisor','password1', 'password2')
 

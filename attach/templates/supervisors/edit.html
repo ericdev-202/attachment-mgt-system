@@ -28,7 +28,7 @@
     color: #000;
     overflow-x: hidden;
     height: 100%;
-    background-image: url("https://i.imgur.com/GMmCQHC.png");
+    /*background-image: url("https://i.imgur.com/GMmCQHC.png");*/
     background-repeat: no-repeat;
     background-size: 100% 100%
 }
@@ -167,7 +167,13 @@ button:focus {
                          <input type="text" class="form-control" name="company_phone_no" id="id_company_phone_no" required maxlength="150" value="{{ student.company_phone_no }}" /> 
                         </div>  
                     </div>
-                    <!-- <div class="row justify-content-between text-left">
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                          <label class="form-control-label px-3">Univeristy Name:<span class="text-danger"> *</span></label>
+                          <input type="text" class="form-control" name="university_name" id="id_univeristy_name" required maxlength="150" value="{{ student.university_name }}" />
+                        </div> 
+                    </div>
+                    <div class="row justify-content-between text-left">
                         <div class="form-group col-sm-6 flex-column d-flex">
                           <label class="form-control-label px-3">Period From:<span class="text-danger"> *</span></label>
                           <input type="date" class="form-control" name="period_from" id="id_period_from" required maxlength="150" value="{{ student.period_from }}" />
@@ -176,20 +182,20 @@ button:focus {
                           <label class="form-control-label px-3">Period To:<span class="text-danger"> *</span></label>
                          <input type="date" class="form-control" name="period_to" id="id_period_to" required maxlength="150" value="{{ student.period_to }}" /> 
                         </div>  
-                    </div> -->
+                    </div>
                     <div class="row">
                           <div class="form-group col-sm-12 flex-column d-flex">
                                 <div style="display: inline-block;">
                                     <label style="font-size:17px;margin-left: px;">Gender<span class="text-danger">*</span></label>
                                     <div>
                                         <tr>
-                                        <td class="table" value="{{student.gender}}"></td>
+                                        <td class="table" required value="{{student.gender}}"></td>
                                         <label style="margin-left: px;font-size: 14px;">Male<span class="text-danger">*</span></label>
                                         <!-- <input type="radio"  placeholder="gender" value="{{superassess.male}}" name='gender'> -->
-                                        <td><input type="radio"  value="male" name='gender'></td> 
+                                        <td><input type="radio" required value="male" name='gender'></td> 
                                         <label style="margin-left: 15px;font-size: 14px;">Female<span class="text-danger">*</span></label>
                                         <!-- <input style="margin-right: 60px !important;" type="radio"  placeholder="gender" value="{{superassess.female}}" name='gender'> -->
-                                        <td><input type="radio"  value="female" name='gender'></td>  
+                                        <td><input type="radio" required value="female" name='gender'></td>  
                                     </tr>
                                     </div>  
                                 </div> 
@@ -213,68 +219,68 @@ button:focus {
              </thead>
    <tbody>
     <tr>  
-     <td class="table" value="{{student.punctual}}">Punctuality</td>
-     <td><input type="radio"  placeholder="punctual" value="excellent" name='punctual'></td> 
-     <td><input type="radio"  placeholder="punctual"  value="good" name='punctual'></td>   
-     <td><input type="radio"  placeholder="punctual" value="average" name='punctual'></td>   
-     <td><input type="radio"  placeholder="punctual" value="fair" name='punctual'></td>  
-     <td><input type="radio"  placeholder="punctual" value="poor" name='punctual'></td>  
+     <td class="table" value="{{student.punctual}}" required>Punctuality</td>
+     <td><input type="radio"  placeholder="punctual" required value="excellent" name='punctual'></td> 
+     <td><input type="radio"  placeholder="punctual" required value="good" name='punctual'></td>   
+     <td><input type="radio"  placeholder="punctual" required value="average" name='punctual'></td>   
+     <td><input type="radio"  placeholder="punctual" required value="fair" name='punctual'></td>  
+     <td><input type="radio"  placeholder="punctual" required value="poor" name='punctual'></td>  
     </tr>
     <tr>
-        <td value="{{student.regulations}}">Regulations</td>
-        <td><input type="radio"  placeholder="regulations" value="excellent" name='regulations'></td>
-        <td><input type="radio"  placeholder="regulations" value="good" name='regulations'></td>
-        <td><input type="radio"  placeholder="regulations" value="average" name='regulations'></td>
-        <td><input type="radio"  placeholder="regulations" value="fair" name='regulations'></td>
-        <td><input type="radio"  placeholder="regulations" value="poor" name='regulations'></td>
+        <td value="{{student.regulations}}" required>Regulations</td>
+        <td><input type="radio"  placeholder="regulations" required value="excellent" name='regulations'></td>
+        <td><input type="radio"  placeholder="regulations" required value="good" name='regulations'></td>
+        <td><input type="radio"  placeholder="regulations" required value="average" name='regulations'></td>
+        <td><input type="radio"  placeholder="regulations" required value="fair" name='regulations'></td>
+        <td><input type="radio"  placeholder="regulations" required value="poor" name='regulations'></td>
     </tr> 
     <tr>
-        <td value="{{student.workmanship}}" >Workmanship</td>
-        <td><input type="radio"  placeholder="workmanship" value="excellent" name='workmanship'></td>
-        <td><input type="radio"  placeholder="workmanship" value="good" name='workmanship'></td>
-        <td><input type="radio"  placeholder="workmanship" value="average" name='workmanship'></td>
-        <td><input type="radio"  placeholder="workmanship" value="fair" name='workmanship'></td>
-        <td><input type="radio"  placeholder="workmanship" value="poor" name='workmanship'></td>
+        <td value="{{student.workmanship}}" required >Workmanship</td>
+        <td><input type="radio"  placeholder="workmanship" required value="excellent" name='workmanship'></td>
+        <td><input type="radio"  placeholder="workmanship" required value="good" name='workmanship'></td>
+        <td><input type="radio"  placeholder="workmanship" required value="average" name='workmanship'></td>
+        <td><input type="radio"  placeholder="workmanship" required value="fair" name='workmanship'></td>
+        <td><input type="radio"  placeholder="workmanship" required value="poor" name='workmanship'></td>
     </tr> 
     <tr>
-        <td value="{{student.workout}}" >Workout</td>
-        <td><input type="radio"  placeholder="workout" value="excellent" name='workout'></td>
-        <td><input type="radio"  placeholder="workout" value="good" name='workout'></td>
-        <td><input type="radio"  placeholder="workout" value="average" name='workout'></td>
-        <td><input type="radio"  placeholder="workout" value="fair" name='workout'></td>
-        <td><input type="radio"  placeholder="workout" value="poor" name='workout'></td>
+        <td value="{{student.workout}}" required >Workout</td>
+        <td><input type="radio"  placeholder="workout" required value="excellent" name='workout'></td>
+        <td><input type="radio"  placeholder="workout" required value="good" name='workout'></td>
+        <td><input type="radio"  placeholder="workout" required value="average" name='workout'></td>
+        <td><input type="radio"  placeholder="workout" required value="fair" name='workout'></td>
+        <td><input type="radio"  placeholder="workout" required value="poor" name='workout'></td>
     </tr>
     <tr>
-        <td value="{{student.adaptability}}" >Adaptability</td>
-        <td><input type="radio"  placeholder="adaptability" value="excellent" name='adaptability'></td>
-        <td><input type="radio"  placeholder="adaptability" value="good" name='adaptability'></td>
-        <td><input type="radio"  placeholder="adaptability" value="average" name='adaptability'></td>
-        <td><input type="radio"  placeholder="adaptability" value="fair" name='adaptability'></td>
-        <td><input type="radio"  placeholder="adaptability" value="poor" name='adaptability'></td>
+        <td value="{{student.adaptability}}" required>Adaptability</td>
+        <td><input type="radio"  placeholder="adaptability" required value="excellent" name='adaptability'></td>
+        <td><input type="radio"  placeholder="adaptability" required value="good" name='adaptability'></td>
+        <td><input type="radio"  placeholder="adaptability" required value="average" name='adaptability'></td>
+        <td><input type="radio"  placeholder="adaptability" required value="fair" name='adaptability'></td>
+        <td><input type="radio"  placeholder="adaptability" required value="poor" name='adaptability'></td>
     </tr>
     <tr>
-        <td value="{{student.commu}}">Communication</td>
-        <td><input type="radio"  placeholder="commu" value="excellent" name='commu'></td>
-        <td><input type="radio"  placeholder="commu" value="good" name='commu'></td>
-        <td><input type="radio"  placeholder="commu" value="average" name='commu'></td>
-        <td><input type="radio"  placeholder="commu" value="fair" name='commu'></td>
-        <td><input type="radio"  placeholder="commu" value="poor" name='commu'></td>     
+        <td value="{{student.commu}}" required>Communication</td>
+        <td><input type="radio"  placeholder="commu" required value="excellent" name='commu'></td>
+        <td><input type="radio"  placeholder="commu" required value="good" name='commu'></td>
+        <td><input type="radio"  placeholder="commu" required value="average" name='commu'></td>
+        <td><input type="radio"  placeholder="commu" required value="fair" name='commu'></td>
+        <td><input type="radio"  placeholder="commu" required value="poor" name='commu'></td>     
     </tr>
     <tr>
-        <td value="{{student.reliability}}" >Reliability</td>
-        <td><input type="radio"  placeholder="reliability" value="excellent" name='reliability'></td>
-        <td><input type="radio"  placeholder="reliability" value="good" name='reliability'></td>
-        <td><input type="radio"  placeholder="reliability" value="average" name='reliability'></td>
-        <td><input type="radio"  placeholder="reliability" value="fair" name='reliability'></td>
-        <td><input type="radio"  placeholder="reliability" value="poor" name='reliability'></td>
+        <td value="{{student.reliability}}" required>Reliability</td>
+        <td><input type="radio"  placeholder="reliability" required value="excellent" name='reliability'></td>
+        <td><input type="radio"  placeholder="reliability" required value="good" name='reliability'></td>
+        <td><input type="radio"  placeholder="reliability" required value="average" name='reliability'></td>
+        <td><input type="radio"  placeholder="reliability" required value="fair" name='reliability'></td>
+        <td><input type="radio"  placeholder="reliability" required value="poor" name='reliability'></td>
     </tr>
     <tr>
-        <td value="{{student.team_work}}">Team Work</td>
-        <td><input type="radio"  placeholder="team_work" value="excellent" name='team_work'></td>
-        <td><input type="radio"  placeholder="team_work" value="good" name='team_work'></td>
-        <td><input type="radio"  placeholder="team_work" value="average" name='team_work'></td>
-        <td><input type="radio"  placeholder="team_work" value="fair" name='team_work'></td>
-        <td><input type="radio"  placeholder="team_work" value="poor" name='team_work'></td>
+        <td value="{{student.team_work}}" required>Team Work</td>
+        <td><input type="radio"  placeholder="team_work" required value="excellent" name='team_work'></td>
+        <td><input type="radio"  placeholder="team_work" required value="good" name='team_work'></td>
+        <td><input type="radio"  placeholder="team_work" required value="average" name='team_work'></td>
+        <td><input type="radio"  placeholder="team_work" required value="fair" name='team_work'></td>
+        <td><input type="radio"  placeholder="team_work" required value="poor" name='team_work'></td>
     </tr>
 <!--     <tr>
         <td value="{{student.overall_assessment}}">Overall Assessment</td>
@@ -315,21 +321,21 @@ button:focus {
                                     <label style="font-size:17px;margin-left: ;">Overall Assessment<span class="text-danger">*</span></label>
                                     <div>
                                         <tr>
-                                        <td class="table" value="{{student.overall_assessment}}"></td>
+                                        <td required class="table" value="{{student.overall_assessment}}"></td>
                                         <label style="margin-left: px;font-size: 14px;">Excellent</label>
-                                        <td><input type="radio"  value="excellent" name='overall_assessment'></td> 
+                                        <td><input type="radio" required value="excellent" name='overall_assessment'></td> 
 
                                         <label style="margin-left: 15px;font-size: 14px;">Good</label>
-                                        <td><input type="radio"  value="good" name='overall_assessment'></td>  
+                                        <td><input type="radio" required value="good" name='overall_assessment'></td>  
 
                                         <td class="table" value="{{student.overall_assessment}}"></td>
                                         <label style="margin-left: 15px;font-size: 14px;">Average</label>
-                                        <td><input type="radio"  value="average" name='overall_assessment'></td> 
+                                        <td><input type="radio" required  value="average" name='overall_assessment'></td> 
 
                                         <label style="margin-left: 15px;font-size: 14px;">Fair</label>
-                                        <td><input type="radio"  value="fair" name='overall_assessment'></td> 
+                                        <td><input type="radio" required  value="fair" name='overall_assessment'></td> 
                                         <label style="margin-left: 15px;font-size: 14px;">Poor</label>
-                                        <td><input type="radio"  value="poor" name='overall_assessment'></td>  
+                                        <td><input type="radio" required value="poor" name='overall_assessment'></td>  
                                     </tr>
                                     </div>  
                                 </div> 

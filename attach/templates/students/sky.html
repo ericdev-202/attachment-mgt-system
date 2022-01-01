@@ -1,4 +1,3 @@
-
 {% extends "students/base.html" %}
  
 
@@ -116,58 +115,39 @@ button:focus {
 
 
 <form method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
+	{% csrf_token %}
  <div class="container-fluid px-1 py-5 mx-auto">
     <div class="row">
         <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
-            <h3 style="margin-left:600px;font-size: 20px;top:60px;">Student Details</h3>
+            <h3 style="margin-left:600px;font-size: 20px;top:60px;">Fill Company Details</h3>
             <p class="blue-text"></p>
             <div class="card">
                 <h5 class="text-center mb-4"></h5>
-                    <div class="row ">            
-                    </div>
-                    {% for student in student %}  
-                    <div class="row justify-content-between text-left">
-                        <div class="form-group col-sm-6 flex-column d-flex">
-                          <label class="form-control-label px-3">Name:<span class="text-danger"></span></label>
-                        <input type="text" required="" name=""  id="" class="form-control" value="{{student.student_name}}">
-                        </div>
-                        <div class="form-group col-sm-6 flex-column d-flex">
-                          <label class="form-control-label px-3">Reg NO:<span class="text-danger"> </span></label>
-                          <input type="text" name="" required="" id="" value="{{student.regno}}" class="form-control">
-                        </div>
+                    <div class="row ">           	
                     </div>
                     <div class="row justify-content-between text-left">
                         <div class="form-group col-sm-6 flex-column d-flex">
-                          <label class="form-control-label px-3">Course name:<span class="text-danger"></span></label>
-                        <input type="text" id="" required name="" value="{{ student.coursename}}" class="form-control">
+                          <!-- <label>Your Name<span class="text-danger"> *</span></label> -->
+                          <label class="form-control-label px-3">Your Name:<span class="text-danger"> *</span></label>
+                            <select name="student" class="form-control">
+                                <option value='none'>..</option>
+
+                                {% for student in students %}
+                                <option value='{{student.id}}'>{{student.student_name}}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                         <div class="form-group col-sm-6 flex-column d-flex">
-                          <label class="form-control-label px-3">Year Of Study<span class="text-danger"> </span></label>
-                          <input type="text" id="" name="" value="{{ student.year_of_study}}" required class="form-control"> 
-                        </div>
+                          <label class="form-control-label px-3">Fullname:<span class="text-danger"> *</span></label>
+                          <input required name="name" id="name" type="text" class="form-control">
+                        </div> 
                     </div>
-                    <div class="row justify-content-between text-left">
-                        <div class="form-group col-sm-6 flex-column d-flex">
-                          <label class="form-control-label px-3">School:<span class="text-danger"></span></label>
-                        <input type="text" id="" required="" name="" value="{{ student.school }}" class="form-control">
-                        </div>
-                        <div class="form-group col-sm-6 flex-column d-flex">
-                          <label class="form-control-label px-3">University Name:<span class="text-danger"></span></label>
-                        <input type="text" id="" required="" name="" value="{{ student.university_name }}" class="form-control">
-                        </div>
-                        
-                    </div>
-                    {% empty %}
-                    <tr>
-                       <td colspan="8" class="text-center" ><button  class="btn btn-success"><a style="color: white !important;text-decoration:none;" href="{% url 'new_student' %}">Add Your Details</a></button></td>
-                   </tr>
-                   {% endfor %} 
-<!--                     <div class="row justify-content-center">
+                    
+                    <div class="row justify-content-center">
                         <div class="form-group col-sm-6">
                           <button type="submit" class="btn-block btn-primary">Submit</button>
                         </div>
-                    </div> -->
+                    </div>
                 </form>
             </div>
         </div>

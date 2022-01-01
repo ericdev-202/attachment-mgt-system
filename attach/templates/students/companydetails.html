@@ -31,7 +31,7 @@
     color: #000;
     overflow-x: hidden;
     height: 100%;
-    background-image: url("https://i.imgur.com/GMmCQHC.png");
+    /*background-image: url("https://i.imgur.com/GMmCQHC.png");*/
     background-repeat: no-repeat;
     background-size: 100% 100%
 }
@@ -148,9 +148,70 @@ button:focus {
                         <input type="text" required="" name="registration_no"  id="registration_no" class="form-control">
                         </div>
                         <div class="form-group col-sm-6 flex-column d-flex">
+                          <label class="form-control-label px-3">University Name:<span class="text-danger"> </span></label>
+                          <input type="text" name="university_name" required="" id="university_name" value="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group col-sm-6 flex-column d-flex">
                           <label class="form-control-label px-3">Phone No:<span class="text-danger"> </span></label>
                           <input type="text" name="phone_number" required="" id="phone_number" value="" class="form-control">
                         </div>
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                          <label class="form-control-label px-3">County:<span class="text-danger"></span></label>
+                          <select class="form-control" name="county">
+                            <option></option>
+                            <option>Mombasa</option>
+                            <option>Kwale</option>
+                            <option>Kilifi</option>
+                            <option>Tana River</option>
+                            <option>Lamu</option>
+                            <option>Taita/Taveta</option>
+                            <option>Garissa</option>
+                            <option>Wajir</option>
+                            <option>Mandera</option>
+                            <option>Marsabit</option>
+                            <option>Isiolo</option>
+                            <option>Meru</option>
+                            <option>Tharaka-Nithi</option>
+                            <option>Embu</option>
+                            <option>Kitui</option>
+                            <option>Machakos</option>
+                            <option>Makueni</option>
+                            <option>Nyandarua</option>
+                            <option>Nyeri</option>
+                            <option>Kirinyaga</option>
+                            <option>Muranga</option>
+                            <option>Kiambu</option>
+                            <option>Turkana</option>
+                            <option>West Pokot</option>
+                            <option>Samburu</option>
+                            <option>Trans Nzoia</option>    
+                            <option>Usain Gishu</option>   
+                            <option>ELgeyo/Marakwet</option> 
+                            <option>Nandi</option>          
+                            <option>Baringo</option>     
+                            <option>Laikipia</option>      
+                            <option>Nakuru</option>         
+                            <option>Narok</option>      
+                            <option>Kajiado</option>    
+                            <option>Kericho</option>      
+                            <option>Bomet</option> 
+                            <option>Kakamega</option>
+                            <option>Vihiga</option>
+                            <option>Bungoma</option>
+                            <option>Busia</option>
+                            <option>Siaya</option>
+                            <option>Kisumu</option>
+                            <option>Homa Bay</option>
+                            <option>Migori</option>
+                            <option>Kisii</option>
+                            <option>Nyamira</option>
+                            <option>Nairobi City</option>
+                          </select>
+                        <!-- <input type="text" id="county" required="" name="county" value="" class="form-control"> -->
+                        </div>
+                        
                     </div>
                     <div class="row justify-content-between text-left">
                         <div class="form-group col-sm-6 flex-column d-flex">
@@ -162,13 +223,7 @@ button:focus {
                           <textarea type="text" id="address" name="address" value="" required class="form-control"></textarea> 
                         </div>
                     </div>
-                    <div class="row justify-content-between text-left">
-                        <div class="form-group col-sm-6 flex-column d-flex">
-                          <label class="form-control-label px-3">County:<span class="text-danger"></span></label>
-                        <input type="text" id="county" required="" name="county" value="" class="form-control">
-                        </div>
-                        
-                    </div>
+                    
                     <div class="row justify-content-between text-left">
                         
                         <div class="form-group col-sm-6 flex-column d-flex">

@@ -42,6 +42,7 @@ class User(AbstractBaseUser,PermissionsMixin):
     last_name     = models.CharField(max_length=30,blank=True)
     phone_number  = models.CharField(max_length=20, verbose_name='phone number',null=True,blank=True)
     company_name  = models.CharField(max_length=50,blank=True)
+    university_name = models.CharField(max_length=100,blank=True)
     date_joined   = models.DateTimeField(verbose_name='date_joined',auto_now_add=True)
     last_login    = models.DateTimeField(verbose_name='last login',auto_now=True)
     is_admin      = models.BooleanField(default=False)
@@ -78,6 +79,15 @@ SCHOOL=(
 	('SPAS','SPAS'),
 	('SAFS','SAFS'),
 	)
+COUNTY = (
+	('Mombasa','Mombasa'),('Kwale','Kwale'),('Kilifi','Kilifi'),('Tana River','Tana River'),('Lamu','Lamu'),('Taita/Taveta','Taita/Taveta'),
+	('Garissa','Garissa'),('Wajir','Wajir'),('Mandera','Mandera'),('Marsabit','Marsabit'),('Isiolo','Isiolo'),('Meru','Meru'),('Tharaka-Nithi','Tharaka-Nithi'),
+	('Embu','Embu'),('Kitui','Kitui'),('Machakos','Machakos'),('Makueni','Makueni'),('Nyandarua','Nyandarua'),('Nyeri','Nyeri'),('Kirinyaga','Kirinyaga'),
+	('Muranga','Muranga'),('Kiambu','Kiambu'),('Turkana','Turkana'),('West Pokot','West Pokot'),('Samburu','Samburu'),('Trans Nzoia','Trans Nzoia'),
+	('Usain Gishu','Usain Gishu'),('Elgeyo/Marakwet','Elgeyo/Marakwet'),('Nandi','Nandi'),('Baringo','Baringo'),('Laikipia','Laikipia'),('Nakuru','Nakuru'),
+	('Narok','Narok'),('Kajiado','Kajiado'),('Kericho','Kericho'),('Bomet','Bomet'),('Kakamega','Kakamega'),('Vihiga','Vihiga'),('Bungoma','Bungoma'),
+	('Busia','Busia'),('Siaya','Siaya'),('Kisumu','Kisumu'),('Homa Bay','Homa Bay'),('Migori','Migori'),('Kisii','Kisii'),('Nyamira','Nyamira'),
+	('Nairobi City','Nairobi City'),)
 # class User(AbstractUser):
 # 	is_admin = models.BooleanField(default=False)
 # 	is_lecturer = models.BooleanField(default=False)
@@ -99,6 +109,15 @@ class Staff(models.Model):
 		return self.staff_name
 
 
+class Supervisor(models.Model):
+	id = models.AutoField(primary_key=True)
+	user = models.ForeignKey(User,on_delete=models.CASCADE)
+	supervisorname = models.CharField(max_length=255)
+	phoneno = models.CharField(max_length=255)
+	companyname = models.CharField(max_length=255)
+
+	def __str__(self):
+		return self.supervisor_name
 
 class StudentDetails(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -108,21 +127,30 @@ class StudentDetails(models.Model):
 	regno = models.CharField(max_length=100)
 	year_of_study = models.CharField(max_length=100,choices=YEAR_OF_STUDY)
 	school = models.CharField(max_length=100,choices=SCHOOL)
+	university_name = models.CharField(max_length=100)
 	created = models.DateTimeField(auto_now_add=True)
 
 
 	def __str__(self):
 		return self.regno	
 
+class Sky(models.Model):		
+	id = models.AutoField(primary_key=True)
+	student = models.ForeignKey(StudentDetails,on_delete=models.DO_NOTHING,blank=True,null=True)
+	staff = models.ForeignKey(Staff,on_delete=models.DO_NOTHING,blank=True,null=True)
+	name = models.CharField(max_length=120)
+	address = models.TextField()
+
 class CompDetails(models.Model):
 	id = models.AutoField(primary_key=True)
 	student = models.ForeignKey(StudentDetails,on_delete=models.DO_NOTHING)
 	s_fullname = models.CharField(max_length=255)
+	university_name = models.CharField(max_length=255)
 	registration_no = models.CharField(max_length=255)
 	phone_number = models.CharField(max_length=100)
 	company_name = models.CharField(max_length=200)
 	address = models.TextField()
-	county = models.CharField(max_length=200)
+	county = models.CharField(max_length=200,choices=COUNTY)
 	company_phone_no = models.CharField(max_length=255)
 	supervisor_name = models.CharField(max_length=255)
 
@@ -133,6 +161,7 @@ class CompDetails(models.Model):
 
 class Elogbook(models.Model):
 	id = models.AutoField(primary_key=True)
+	company = models.ForeignKey(CompDetails,on_delete=models.DO_NOTHING,default=1)
 	student = models.ForeignKey(StudentDetails,on_delete=models.DO_NOTHING)
 	workdone = models.TextField()
 	skills = models.TextField(default=1)
@@ -171,6 +200,7 @@ class Student(models.Model):
 		('notassessed','notassessed'),
 		)
 	s_fullname = models.CharField(max_length=255)
+	university_name = models.CharField(max_length=255)
 	registration_no = models.CharField(max_length=255)
 	phone_number = models.CharField(max_length=100)
 	company_name = models.CharField(max_length=200)
@@ -215,6 +245,7 @@ class Lecturer(models.Model):
 		('notassessed','notassessed'),
 		)
 	s_fullname = models.CharField(max_length=255)
+	university_name = models.CharField(max_length=255)
 	registration_no = models.CharField(max_length=255)
 	phone_number = models.CharField(max_length=100)
 	company_name = models.CharField(max_length=255)

@@ -155,7 +155,7 @@ class CompDetails(models.Model):
 	supervisor_name = models.CharField(max_length=255)
 
 	def __str__(self):
-		return self.s_fullname
+		return self.company_name
 
 
 
@@ -167,7 +167,7 @@ class Elogbook(models.Model):
 	skills = models.TextField(default=1)
 	mdate = models.DateField(null=False, blank=False)
 	dayOfTheWeek = myFields.DayOfTheWeekField()
-	remarks = models.TextField()
+	# remarks = models.TextField()
 	created = models.DateTimeField(auto_now_add=True)
 
 	class Meta:

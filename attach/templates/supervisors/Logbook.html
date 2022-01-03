@@ -22,6 +22,7 @@
                 <th style="text-align:center">Special Skills Acquired</th>
              </thead>
    <tbody>
+    {% for logbooks in logbooks %}
     <tr>  
      <!-- <td><input type="checkbox" class="checkthis" /></td> -->
      <td  class="col-sm-1">{{ logbooks.id }}</td> 
@@ -30,6 +31,7 @@
      <td style="height: 110px !important; width: 100px !important;">{{ logbooks.workdone }}</td>  
      <td style="width: 100px !important;" class="col-sm-4">{{ logbooks.skills }}</td> 
     </tr>  
+    {% endfor %}
 
    </tbody>
          

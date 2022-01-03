@@ -178,22 +178,22 @@ def getAssess(request, id):
 
 @login_required
 def logbookdetails(request):
+    regnos = []
     user = request.user
-    # onelogbook = set()
     onelogbook = []
-    logbook = Elogbook.objects.select_related('student').filter(student__university_name=user.university_name)
-    # logbook = Elogbook.objects.filter(student__university_name=user.university_name)
+    logbook = Elogbook.objects.select_related().filter(student__university_name=user.university_name)
     for l in logbook:
-        onelogbook.append(l.student)
-        print(logbook)
-        # onelogbook.add(l)
-    # print(onelogbook)
+        regnos.append(l.student.regno)
+    keys = set(r for r in regnos)
         
-    return render(request,'lectures/viewlogbook.html',{'logbook':logbook})
+    return render(request,'lectures/viewlogbook.html',{'logbook':keys})
 
 @login_required
-def logbookview(request, id):
-    logbooks = Elogbook.objects.get(id=id)
+def logbookview(request, regno):
+    print('before')
+    logbooks = Elogbook.objects.filter(student__regno=regno)
+    for p in logbooks:
+        print(p)
     return render(request,'lectures/logbook.html',{'logbooks':logbooks})
 
 @login_required
@@ -281,15 +281,22 @@ def view(request, id):
 
 @login_required
 def Logbook(request):
+    regnos = []
     user = request.user
-    logbook = Elogbook.objects.filter(company__company_name=user.company_name)
-    return render(request,'supervisors/viewLogbook.html',{'logbook':logbook})    
+    onelogbook = []
+    logbook = Elogbook.objects.select_related().filter(company__company_name=user.company_name)
+    for l in logbook:
+        regnos.append(l.student.regno)
+    keys = set(r for r in regnos)    
+    return render(request,'supervisors/viewLogbook.html',{'logbook':keys})    
 
 
 @login_required
-def ViewLogbook(request, id):
-    logbooks = Elogbook.objects.get(id=id)
-    return render(request,'supervisors/Logbook.html',{'logbooks':logbooks})
+def ViewLogbook(request, regno):
+    logbooks = Elogbook.objects.filter(student__regno=regno)
+    for p in logbooks:
+        print(p)
+    return render(request,'supervisors/Logbook.html',{'logbooks':logbooks}) 
 #end of supervisor views    
 
 
@@ -428,11 +435,14 @@ def elogbook(request):
 @login_required(login_url='login')
 def elogbook_entry(request):
     user = request.user
+    # company = request.company
 
     students = user.studentdetails_set.all()
+    # companys = StudentDetails.compdetails_set.all()
 
     if request.method == 'POST':
         student = request.POST.get('student')
+        company = request.POST.get('company')
         workdone = request.POST.get('workdone')
         skills = request.POST.get('skills')
         mdate = request.POST.get('mdate')
@@ -441,10 +451,13 @@ def elogbook_entry(request):
 
         if data['student'] != 'none': 
             student = StudentDetails.objects.get(id=data['student'])
+            # company = CompDetails.objects.get(id=data['company'])
         else:   
             student = None
+            # company = None
         elogbook = Elogbook.objects.create(
             student=student,
+            # company=company,
             workdone =workdone,
             skills = skills,
             mdate=mdate,

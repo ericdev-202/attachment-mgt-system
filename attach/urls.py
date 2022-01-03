@@ -23,7 +23,7 @@ urlpatterns = [
     path('viewcompanydetails/',views.viewCompanydetails,name='allcompanydetails'),
     path('editview/<int:id>', views.getAssess),
     path('logbookdetails/',views.logbookdetails,name='logbookdetails'),
-    path('viewlog/<int:id>',views.logbookview),
+    path('viewlog/<str:regno>',views.logbookview),
     path('reportview/',views.reportview,name='reportviews'),
     path('assessed/',views.showassessed,name='assessed'),
     path('lecassess/<int:id>', views.LecAssess),  
@@ -55,7 +55,7 @@ urlpatterns = [
     #suprvisor urls
     # path('',views.student),
     path('viewlogbook/',views.Logbook,name="viewlogbooks"),
-    path('log/<int:id>',views.ViewLogbook),
+    path('log/<str:regno>',views.ViewLogbook),
     path('assessment/',views.viewassessment,name='assess'),
     path('assess/<int:id>',views.view,name="viewassess"),
     path('supervisor_page/',views.supervisor,name='supervisors'),

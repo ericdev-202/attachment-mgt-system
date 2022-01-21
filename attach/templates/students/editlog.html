@@ -1,0 +1,75 @@
+<!-- //templates/edit.html -->
+{% extends "students/base.html" %}
+ 
+ 
+{% block title %}Add New Employee Records{% endblock title %}
+ 
+{% block content %}
+  <section class="home-section">
+    <div class="home-content">
+      <!-- <i class='bx bx-menu' ></i> -->
+      <!-- <span class="text">Drop Down Sidebar</span> -->
+      <div class="col-md-12">
+    <!-- <h4>Django CRUD (Create Read Update Delete) Example - Bootstrap Datatable</h4>   -->
+ <form method="POST" class="post-form" action="/updatelog/{{logbook.id}}">  
+   {% csrf_token %}  
+  <div class="container">  
+ <br>  
+  <div class="form-group row">  
+  <label class="col-sm-1 col-form-label"></label>  
+  <div class="col-sm-4">  
+  <h3>Update Details</h3>  
+  </div>  
+   </div>  
+  <div class="form-group row">  
+  <!-- <label class="col-sm-2 col-form-label">Student Id:</label>   -->
+  <div class="col-sm-4">  
+   <input type="text" style="display:none;" class="form-control" name="id" id="id_id" required maxlength="20" value="{{ logbook.id }}"/>  
+  </div>  
+   </div>  
+   <div class="form-group row">  
+  <label class="col-sm-2 col-form-label">Workdone:</label>  
+  <div class="col-sm-4">  
+   <input type="text" style="height: 150px"  class="form-control" name="workdone" id="id_workdone" required maxlength="150" value="{{ logbook.workdone }}" />  
+  </div>  
+   </div>  
+  <div class="form-group row">  
+  <label class="col-sm-2 col-form-label">Skills Attained:</label>  
+  <div class="col-sm-4">  
+   <input type="text" style="height: 150px" class="form-control" name="skills" id="id_skills" required maxlength="150" value="{{ logbook.skills }}" />  
+  </div>  
+   </div>  
+  <div class="form-group row">  
+  <label class="col-sm-2 col-form-label">Date:</label>  
+  <div class="col-sm-4">  
+   <input type="date" class="form-control" name="mdate" id="id_mdate" required maxlength="15" value="{{ logbook.mdate }}" />  
+  </div>  
+   </div> 
+  <div class="form-group row">  
+  <label class="col-sm-2 col-form-label">Day:</label>  
+  <div class="col-sm-4">  
+    <select class="form-control" name="dayOfTheWeek" id="id_dayOfTheWeek" value="{{ logbook.dayOfTheWeek }}" required>
+                            <option>...</option>
+                            <option>Monday</option>
+                            <option>Tuesday</option>
+                            <option>Wednesday</option>
+                            <option>Thursday</option>
+                            <option>Friday</option>
+                            <option>Saturday</option>
+                            <option>Sunday</option>
+                          </select>
+   <!-- <input type="text" class="form-control" name="dayOfTheWeek" id="id_dayOfTheWeek" required maxlength="15" value="{{ logbook.dayOfTheWeek }}" />   -->
+  </div>  
+   </div>      
+  <div class="form-group row">  
+  <label class="col-sm-1 col-form-label"></label>  
+  <div class="col-sm-4">  
+  <button type="submit" class="btn btn-success btn-lg">Update</button>  
+  </div>  
+   </div>  
+  </div>  
+ </form>  
+    </div>
+  </section>
+
+{% endblock content %}   

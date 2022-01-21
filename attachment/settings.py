@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
+
+
 import django_heroku
 
 
@@ -41,8 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
-    'attach'
-    # 'industrial',
+    'attach',
 ]
 
 MIDDLEWARE = [

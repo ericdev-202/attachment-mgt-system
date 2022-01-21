@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib import admin
+from django.templatetags.static import static
 
 # Register your models here.
 from django.contrib.auth.admin import UserAdmin

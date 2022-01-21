@@ -5,9 +5,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    #video call urls
+    path('call/', views.callindex, name='callindex'),
+    path('callsupervisor/', views.callsupervisorindex, name='callsupervisorindex'),
+    path('callstudent/', views.callstudentindex, name='callstudentindex'),
+
+
     #login and register urls
-    path('',views.lindex,name='index'),
-    path('login/',views.login_view, name='login_view'),
+    path('l/',views.lindex,name='index'),
+    path('',views.login_view, name='login_view'),
     path('register/',views.register, name='register'),
     path('Supervisorregister/',views.Supervisorregister, name='supervisor_register'),
     path('Studentregister/',views.Studentregister, name='student_register'),
@@ -29,7 +35,7 @@ urlpatterns = [
     path('lecassess/<int:id>', views.LecAssess),  
     path('lecupdate/<int:id>', views.LecUpdate), 
     path('assessview/<int:id>',views.viewassess),
-
+ 
 
 
 
@@ -40,10 +46,15 @@ urlpatterns = [
     path('sky/',views.skytry),
     path('student/',views.student,name='student'),
     path('student_det/',views.addStudent,name='new_student'),
+    path('editstudentdetails/<int:id>',views.editstudentdetails),
+    path('updatestudentdetails/<int:id>',views.updatestudentdetails),
     path('elogbook/',views.elogbook,name='logbook'),
+    path('editlog/<int:id>',views.editlog),
+    path('updatelog/<int:id>',views.updatelog),
+    path('deletelogbook',views.deletelogbook,name='deletelogbook'),
     path('new_entry',views.elogbook_entry,name='elogbook'),
     path('view/',views.ViewStudent,name='viewstudent'),
-    path('up/',views.model_form_upload,name='report'),
+    path('upload/',views.model_form_upload,name='report'),
     path('view_report/',views.report,name='view_report'), 
     path('company/',views.addCompany,name='companyde'),
     path('viewCompany/',views.viewCompany,name='ViewCompany'), 

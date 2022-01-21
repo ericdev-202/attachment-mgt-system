@@ -3,13 +3,19 @@ from django.conf.urls import url, include
 from .import views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.urls import path
+from .views import peer1, peer2, peer
+
 
 urlpatterns = [
     #video call urls
-    path('call/', views.callindex, name='callindex'),
-    path('callsupervisor/', views.callsupervisorindex, name='callsupervisorindex'),
-    path('callstudent/', views.callstudentindex, name='callstudentindex'),
+    path('peer/', peer, name='peer'),
+    path('peer1/', peer1, name='peer1'),
+    path('peer2/', peer2, name='peer2'),
 
+    path('video/',views.lecturerpeer,name='lecturerpeer'),
+    path('studentvideo/',views.studentpeer,name='studentpeer'),
+    path('supervisorvideo/',views.supervisorpeer,name='supervisorpeer'),
 
     #login and register urls
     path('l/',views.lindex,name='index'),

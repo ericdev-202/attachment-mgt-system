@@ -1,118 +1,89 @@
-# call/consumers.py
 import json
-from asgiref.sync import async_to_sync
-from channels.generic.websocket import WebsocketConsumer
+from channels.generic.websocket import AsyncWebsocketConsumer
 
-class CallConsumer(WebsocketConsumer):
-    def connect(self):
-        self.accept()
+import asyncio
 
-        # response to client, that we are connected.
-        self.send(text_data=json.dumps({
-            'type': 'connection',
-            'data': {
-                'message': "Connected"
-            }
-        }))
+class ChatConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
 
-    def disconnect(self, close_code):
-        # Leave room group
-        async_to_sync(self.channel_layer.group_discard)(
-            self.my_name,
+        self.room_group_name = 'Test-Room'
+
+        await self.channel_layer.group_add(
+            self.room_group_name,
             self.channel_name
         )
 
-    # Receive message from client WebSocket
-    def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        # print(text_data_json)
+        await self.accept()
 
-        eventType = text_data_json['type']
-
-        if eventType == 'login':
-            name = text_data_json['data']['name']
-
-            # we will use this as room name as well
-            self.my_name = name
-
-            # Join room
-            async_to_sync(self.channel_layer.group_add)(
-                self.my_name,
-                self.channel_name
-            )
+    async def disconnect(self, close_code):
         
-        if eventType == 'call':
-            name = text_data_json['data']['name']
-            print(self.my_name, "is calling", name);
-            # print(text_data_json)
+        await self.channel_layer.group_discard(
+            self.room_group_name,
+            self.channel_name
+        )
 
+        print('Disconnected!')
+        
 
-            # to notify the callee we sent an event to the group name
-            # and their's groun name is the name
-            async_to_sync(self.channel_layer.group_send)(
-                name,
+    # Receive message from WebSocket
+    async def receive(self, text_data):
+        receive_dict = json.loads(text_data)
+        peer_username = receive_dict['peer']
+        action = receive_dict['action']
+        message = receive_dict['message']
+
+        # print('unanswered_offers: ', self.unanswered_offers)
+
+        print('Message received: ', message)
+
+        print('peer_username: ', peer_username)
+        print('action: ', action)
+        print('self.channel_name: ', self.channel_name)
+
+        if(action == 'new-offer') or (action =='new-answer'):
+            # in case its a new offer or answer
+            # send it to the new peer or initial offerer respectively
+
+            receiver_channel_name = receive_dict['message']['receiver_channel_name']
+
+            print('Sending to ', receiver_channel_name)
+
+            # set new receiver as the current sender
+            receive_dict['message']['receiver_channel_name'] = self.channel_name
+
+            await self.channel_layer.send(
+                receiver_channel_name,
                 {
-                    'type': 'call_received',
-                    'data': {
-                        'caller': self.my_name,
-                        'rtcMessage': text_data_json['data']['rtcMessage']
-                    }
+                    'type': 'send.sdp',
+                    'receive_dict': receive_dict,
                 }
             )
 
-        if eventType == 'answer_call':
-            # has received call from someone now notify the calling user
-            # we can notify to the group with the caller name
-            
-            caller = text_data_json['data']['caller']
-            # print(self.my_name, "is answering", caller, "calls.")
+            return
 
-            async_to_sync(self.channel_layer.group_send)(
-                caller,
-                {
-                    'type': 'call_answered',
-                    'data': {
-                        'rtcMessage': text_data_json['data']['rtcMessage']
-                    }
-                }
-            )
+        # set new receiver as the current sender
+        # so that some messages can be sent
+        # to this channel specifically
+        receive_dict['message']['receiver_channel_name'] = self.channel_name
 
-        if eventType == 'ICEcandidate':
+        # send to all peers
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                'type': 'send.sdp',
+                'receive_dict': receive_dict,
+            }
+        )
 
-            user = text_data_json['data']['user']
+    async def send_sdp(self, event):
+        receive_dict = event['receive_dict']
 
-            async_to_sync(self.channel_layer.group_send)(
-                user,
-                {
-                    'type': 'ICEcandidate',
-                    'data': {
-                        'rtcMessage': text_data_json['data']['rtcMessage']
-                    }
-                }
-            )
+        this_peer = receive_dict['peer']
+        action = receive_dict['action']
+        message = receive_dict['message']
 
-    def call_received(self, event):
-
-        # print(event)
-        print('Call received by ', self.my_name )
-        self.send(text_data=json.dumps({
-            'type': 'call_received',
-            'data': event['data']
-        }))
-
-
-    def call_answered(self, event):
-
-        # print(event)
-        print(self.my_name, "'s call answered")
-        self.send(text_data=json.dumps({
-            'type': 'call_answered',
-            'data': event['data']
-        }))
-
-
-    def ICEcandidate(self, event):
-        self.send(text_data=json.dumps({
-            'type': 'ICEcandidate',
-            'data': event['data']
+        await self.send(text_data=json.dumps({
+            'peer': this_peer,
+            'action': action,
+            'message': message,
         }))

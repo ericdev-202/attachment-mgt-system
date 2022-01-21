@@ -51,18 +51,56 @@ from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.contrib.auth import get_user_model
 
+
+from django.shortcuts import render
+
+from .utils import get_turn_info
+
 User = get_user_model()
 
 
-def callindex(request):
-    return render(request, 'lectures/videocall.html')
 
-def callsupervisorindex(request):
-    return render(request, 'supervisors/supervisorvideocall.html')
+# Create your views here.
 
-def callstudentindex(request):
-    return render(request, 'students/studentvideocall.html')        
+def peer1(request):
+    # get numb turn info
+    context = get_turn_info()
 
+    return render(request, 'chat/peer1.html', context=context)
+
+def peer2(request):
+    # get numb turn info
+    context = get_turn_info()
+
+    return render(request, 'chat/peer2.html', context=context)
+
+def peer(request):
+    # get numb turn info
+    context = get_turn_info()
+    print('context: ', context)
+
+    return render(request, 'chat/peer.html', context=context)
+@login_required
+def lecturerpeer(request):
+    # get numb turn info
+    context = get_turn_info()
+    print('context: ', context)
+
+    return render(request, 'lectures/videocall.html', context=context) 
+@login_required
+def studentpeer(request):
+    # get numb turn info
+    context = get_turn_info()
+    print('context: ', context)
+
+    return render(request, 'students/studentvideocall.html', context=context)  
+@login_required
+def supervisorpeer(request):
+    # get numb turn info
+    context = get_turn_info()
+    print('context: ', context)
+
+    return render(request, 'supervisors/supervisorvideocall.html', context=context)      
 #register and login views
 def lindex(request):
     return render(request,'logins/index.html')

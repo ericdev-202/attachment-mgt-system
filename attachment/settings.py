@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 
-
+from decouple import config
 import django_heroku
 
 
@@ -30,8 +30,11 @@ SECRET_KEY = 'cbru^w+&2gqz3y8xa*wc@k8r2dy!^bq2*4bepng&fxc*(oit#^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+NUMB_TURN_CREDENTIAL = config('NUMB_TURN_CREDENTIAL', default=None)
+NUMB_TURN_USERNAME = config('NUMB_TURN_USERNAME', default=None)
 
 # Application definition
 
@@ -44,6 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'widget_tweaks',
     'attach',
+
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -137,11 +142,26 @@ TIME_FORMART = [
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
+
+
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# MEDIA_URL ='/media/'
+# MEDIA_ROOT =os.path.join(BASE_DIR,'media')
+
 
 STATIC_URL = '/static/'
+
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-MEDIA_URL ='/media/'
-MEDIA_ROOT =os.path.join(BASE_DIR,'media')
+
+# Channels
+ASGI_APPLICATION = 'attachment.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
+
 
 django_heroku.settings(locals())

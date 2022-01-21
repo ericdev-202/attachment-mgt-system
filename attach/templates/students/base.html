@@ -52,6 +52,12 @@
           <span class="link_name">Report</span>
         </a>
       </li>
+      <li>
+        <a href="{% url 'callsupervisorindex' %}">
+          <i class='bx bx-video' ></i>
+          <span class="link_name">Video Call</span>
+        </a>
+      </li>
 
     <div class="profile-details">
       <div class="profile-content">
@@ -81,6 +87,25 @@
        } 
     );
 } );
+
+function deletelogbook(id) {
+  var action = confirm("Are you sure you want to delete this entry?");
+  if (action != false) {
+    $.ajax({
+      url: '{% url "deletelogbook" %}',
+      data: {
+        'id': id,
+      },
+      dataType:'json',
+      success:function(data){
+        if (data.deleted) {
+          $("#bootstrapdatatable #event-" +id).remove();
+        }
+      }
+    });
+  }
+} 
+
   </script>
 </body>
 </html>

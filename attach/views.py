@@ -27,7 +27,7 @@ from django.conf import settings
 
 #views.py
 from django.shortcuts import render, redirect  
-from .forms import StudentForm,StudentDetailsForm,CompanyF1Form,LecturerF1Form,SignUpForm,LoginForm,CompDetailsForm,LecturerForm,StudentSignUpForm,SupervisorSignUpForm
+from .forms import StudentForm,StudentDetailsForm,CompanyF1Form,LecturerF1Form,SignUpForm,LoginForm,CompDetailsForm,LecturerForm,StudentSignUpForm,SupervisorSignUpForm,ElogBookForm
 from .models import Student
 from attach import myFields
 from .myFields import DayOfTheWeekField
@@ -53,6 +53,15 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
+def callindex(request):
+    return render(request, 'lectures/videocall.html')
+
+def callsupervisorindex(request):
+    return render(request, 'supervisors/supervisorvideocall.html')
+
+def callstudentindex(request):
+    return render(request, 'students/studentvideocall.html')        
 
 #register and login views
 def lindex(request):
@@ -145,10 +154,17 @@ def lecturer(request):
 @login_required
 def viewallstudent(request):
     user = request.user
-    students = StudentDetails.objects.filter(university_name=user.university_name)
+    dict={
+    'total_student':StudentDetails.objects.all().count(),
+    'total_student_company':CompDetails.objects.filter(university_name=user.university_name).count(),
+    'total_student_assessed':Student.objects.filter(status="assessed").count(),
+    'total_student_assessed_lecturer':Lecturer.objects.filter(status="assessed").count(),
+    'students':StudentDetails.objects.filter(university_name=user.university_name),
+    }
+    
     # if request.method == 'GET':
     #     students = StudentDetails.objects.all()
-    return render(request,'lectures/viewallstudent.html',{'students':students})
+    return render(request,'lectures/viewallstudent.html',context=dict)
 
 @login_required
 def viewCompanydetails(request):    
@@ -359,6 +375,18 @@ def addStudent(request):
         form = StudentDetailsForm()
     return render(request,'students/student_details.html',{'form':form})
 
+def editstudentdetails(request,id):
+    studentdetails = StudentDetails.objects.get(id=id)
+    return render(request,'students/editstudentdetails.html',{'studentdetails':studentdetails})
+
+def updatestudentdetails(request,id):    
+    studentdetails = StudentDetails.objects.get(id=id)
+    form = StudentDetailsForm(request.POST, instance=studentdetails)
+    if form.is_valid():
+        form.save()
+        return redirect('viewstudent')
+    return render(request,'students/editstudentdetails.html',{'studentdetails':studentdetails})
+
 
 @login_required
 def addCompany(request):
@@ -468,6 +496,27 @@ def elogbook_entry(request):
     context = {'students':students}
     return render(request,'students/elog.html',context) 
 
+def editlog(request,id):
+    logbook = Elogbook.objects.get(id=id)
+    return render(request,'students/editlog.html',{'logbook':logbook})
+
+def updatelog(request,id):    
+    logbook = Elogbook.objects.get(id=id)
+    form = ElogBookForm(request.POST, instance=logbook)
+    if form.is_valid():
+        form.save()
+        return redirect('logbook')
+    return render(request,'students/editlog.html',{'logbook':logbook})
+
+@login_required
+def deletelogbook(request):
+    id = request.GET.get('id',None)
+    Elogbook.objects.get(id=id).delete()
+    response_data = {
+        'deleted':True
+    }
+    return JsonResponse(response_data)
+    
 def skytry(request):
     user = request.user
     students = user.studentdetails_set.all()

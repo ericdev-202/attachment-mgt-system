@@ -158,6 +158,9 @@ button:focus {
                         </div>
                         
                     </div>
+                    <tr>
+                        <td class="col-sm-1"><p data-placement="top" data-toggle="tooltip" title="Edit"><a href="/editstudentdetails/{{ student.id }}" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span>Edit</a></p></td>
+                    </tr>
                     {% empty %}
                     <tr>
                        <td colspan="8" class="text-center" ><button  class="btn btn-success"><a style="color: white !important;text-decoration:none;" href="{% url 'new_student' %}">Add Your Details</a></button></td>
